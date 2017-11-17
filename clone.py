@@ -10,7 +10,7 @@ data_path = 'data/driving_log.csv'
 img_dir_path = 'data/IMG/'
 
 images = []
-steering = []
+steerings = []
 
 def load_image(orig_img_path):
     img_file_name = orig_img_path.split('/')[-1]
@@ -32,19 +32,19 @@ with open(data_path, 'r') as f:
         img_right = load_image(row[2])
 
         images.extend([img_center, img_left, img_right])
-        steering.extend([steering_center, steering_left, steering_right])
+        steerings.extend([steering_center, steering_left, steering_right])
 
-# aug_images, aug_measurements = [], []
+aug_images, aug_steerings = [], []
 
-# for image, measurement in zip(images, measurements):
-#     aug_images.append(image)
-#     aug_measurements.append(measurement)
+for image, steering in zip(images, steerings):
+    aug_images.append(image)
+    aug_steerings.append(steering)
 
-#     aug_images.append(cv2.flip(image, 1))
-#     aug_measurements.append(measurement * -1.0)
+    aug_images.append(cv2.flip(image, 1))
+    aug_steerings.append(steering * -1.0)
 
-X_train = np.array(images)
-y_train = np.array(steering)
+X_train = np.array(aug_images)
+y_train = np.array(aug_steerings)
 
 model = Sequential()
 model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=(160,320,3)))
