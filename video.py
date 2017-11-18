@@ -16,7 +16,7 @@ def main():
         default=60,
         help='FPS (Frames per second) setting for the video.')
     args = parser.parse_args()
-
+    
     video_file = args.image_folder + '.mp4'
     print("Creating video {}, FPS={}".format(video_file, args.fps))
     clip = ImageSequenceClip(args.image_folder, fps=args.fps)
